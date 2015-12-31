@@ -1,5 +1,6 @@
 var express = require("express");
 var http = require("http");
+var url = require("url");
 var ip = require("ip");
 var server = express();
 
@@ -7,8 +8,7 @@ server.set("port", process.env.PORT || 5000);
 server.use(express.static(__dirname));
 
 server.get("/", function(req, res) {
-	res.type ("text/html");
-	res.send("<h1>Hello World</h1>");
+	res.render("index");
 });
 
 server.use(function(req, res, next) {
@@ -21,6 +21,7 @@ server.use(function(err, req, res, next) {
 	res.type("text/html");
 	res.status(500);
 	res.send("<h1>500 - Server Error</h1>");
+	res.send(err);
 });
 
 server.listen(server.get("port"), function() {
